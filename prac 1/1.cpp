@@ -41,7 +41,7 @@ void pal1(vector <int> mas, int& n, int& tp) {
 	}
 }
 
-void func2(int mas[], int& n,int& i)//удаление элементов
+void func2(int mas[], int& n,int& i)
 {
 	int t = 0;
 	while (t < i) {
@@ -53,7 +53,7 @@ void func2(int mas[], int& n,int& i)//удаление элементов
 	i = i-i;
 }
 
-void func3(int mas[], int& n, int i,int newelem) { //Добавление элемента
+void func3(int mas[], int& n, int i,int newelem) { 
 	for (int j = n; j > i; j--)
 		mas[j] = mas[j - 1];
 	mas[i+1] = newelem;

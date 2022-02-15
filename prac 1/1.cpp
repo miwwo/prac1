@@ -2,8 +2,6 @@
 #include <algorithm>
 #include <vector>
 #include<string>  
-
-
 using namespace std;
 
 /* 
@@ -26,7 +24,22 @@ int func1 (int num) //нахождение палиндрома
 	}
 }
 
-
+void pal(int mas[], int& n,int& tp) {
+	for (int i = 0; i < n; i++) {
+		if (func1(mas[i]) == 1) {
+			tp = i;
+			break;
+		}
+	}
+}
+void pal1(vector <int> mas, int& n, int& tp) {
+	for (int i = 0; i < n; i++) {
+		if (func1(mas[i]) == 1) {
+			tp = i;
+			break;
+		}
+	}
+}
 
 void func2(int mas[], int& n,int& i)//удаление элементов
 {
@@ -66,18 +79,19 @@ void func3d(int mas[], int& n, int i, int newelem) { //Добавление элемента
 	mas[i + 1] = newelem;
 	n++;
 }
-void vv(int n,int mas[]) {
-	cout << "Введите " << n << " элементов: ";
-	for (int i = 0; i < n; i++) cin >> mas[i];
-	cout << "array: ";
-	for (int j = 0; j < n; j++) cout << mas[j] << " ";
-	cout << endl;
-}
+
 void v(int n, int mas[]) {
 	cout << "array: ";
 	for (int j = 0; j < n; j++) cout << mas[j] << " ";
 	cout << endl;
 }
+
+void vv(int n,int mas[]) {
+	cout << "Введите " << n << " элементов: ";
+	for (int i = 0; i < n; i++) cin >> mas[i];
+	v(n, mas);
+}
+
 int main()
 {
 	setlocale(LC_ALL, "ru");
@@ -86,42 +100,51 @@ int main()
 	vector<int>mas_v;
 	const int n_max = 10;
 	int mas_s[n_max];
+	cout << "Лабораторная работа №1 'Однородный массив'. Галиханова Эмилия" << endl;
 	do {
+		cout << "Выберете массив, ввод которого Вы будете осуществлять: ";
 		cout << "1:static array  2:dynamic array  3:vector array \n";
 		cin >> menu;
 		switch (menu) {
 		case 1: //static
-			cout << "Сколько ввести элементов: ";
+			cout << "Сколько ввести элементов(максимум = 10): ";
 			int mas_s[n_max];
 			ns = 0;
 			do
 			{
 				cin >> ns;
+				if (ns > 10)
+					cout << "Вы ввели значение, которое больше максимального размера статического массива! Попробуйте еще раз.\nСколько ввести элементов(максимум = 10): ";
 			} while (ns > n_max);
 			vv(ns, mas_s);
 			tempint = -1;
-			for (int i = 0; i < ns; i++) {
-				if (func1(mas_s[i]) == 1) {
-					tempint = i;
-					break;
-				}
-			}
-			cout <<"+++++" << tempint << endl;
-			if (tempint == -1)
-				cout << "В массиве нет палидромов" << endl;
-			else {
+			//pal(mas_s, ns, tempint);
+			//if (tempint == -1)
+			//	cout << "В массиве нет палидромов" << endl;
+			//else {
 				do {
-					cout << "1:Удалить элементы массива, расположенное непосредственно перед элементом, содержащим число палиндром. \n2:Вставить новый элемент в массив после элемента массива, который является палиндромом. \n";
+					cout << "1:Найти индекс элемента массива, которое является палиндромом.\n2:Удалить элементы массива, расположенное непосредственно перед элементом, содержащим число палиндром. \n3:Вставить новый элемент в массив после элемента массива, который является палиндромом. \n";
 					cin >> menu;
 					switch (menu) {
 					case 1:
+						pal(mas_s, ns, tempint);
+						if (tempint == -1) {
+							cout << "В массиве нет палидромов" << endl;
+							menu = 'f';
+						}
+						else
+							cout << "Индекс элемента, содержащего палиндром: " << tempint << endl;
+						break;
+					case 2:
 						func2(mas_s, ns,tempint);
 						v(ns, mas_s);
 						break;
 
-					case 2:
-						if (ns == n_max)
+					case 3:
+						if (ns == n_max) {
 							cout << "no space" << endl;
+							break;
+						}
 						else {
 							cout << "Введите элемент, который надо вставить в массив: " << endl;
 							cin >> tempint1;
@@ -130,8 +153,7 @@ int main()
 						}
 						break;
 					}
-				} while (menu != 0);
-			}
+				} while (menu != 'f');
 			break;
 
 		case 2: //dynamic
@@ -143,24 +165,28 @@ int main()
 			mas_d = new int[nd];
 			vv(nd, mas_d);
 			tempint = -1;
-			for (int i = 0; i < nd; i++) {
-				if (func1(mas_d[i]) == 1) {
-					tempint = i;
-					break;
-				}
-			}
-			if (tempint == -1)
-				cout << "В массиве нет палидромов" << endl;
-			else {
+			//pal(mas_d, nd, tempint);
+			//if (tempint == -1)
+			//	cout << "В массиве нет палидромов" << endl;
+			//else {
 				do {
-					cout << "1:Удалить элементы массива, расположенное непосредственно перед элементом, содержащим число палиндром. \n2:Вставить новый элемент в массив после элемента массива, который является палиндромом. \n";
+					cout << "" << endl;
+					cout << "1:Найти индекс элемента массива, которое является палиндромом.\n2:Удалить элементы массива, расположенное непосредственно перед элементом, содержащим число палиндром. \n3:Вставить новый элемент в массив после элемента массива, который является палиндромом. \n";
 					cin >> menu;
 					switch (menu) {
 					case 1:
-						func2d(mas_d, nd, tempint);
-						v(nd, mas_d);
+						pal(mas_d, nd, tempint);
+						if (tempint == -1)
+							cout << "В массиве нет палидромов" << endl;
+						else
+							cout << "Индекс элемента, содержащего палиндром: " << tempint << endl;
 						break;
 					case 2:
+						func2d(mas_d, nd, tempint);
+						v(nd, mas_d);
+						free(mas_d);
+						break;
+					case 3:
 						cout << "Введите элемент, который надо вставить в массив: " << endl;
 						cin >> tempint1;
 						func3d(mas_d, nd, tempint, tempint1);
@@ -168,9 +194,8 @@ int main()
 						break;
 					}
 				} while (menu != 0);
-			}
 				break;
-
+#pragma region
 		case 3: //vector
 			cout << "Cколько ввести элементов: ";
 			cin >> nv;;
@@ -182,27 +207,30 @@ int main()
 			cout << "array: ";
 			for (int j = 0; j < mas_v.size(); j++) cout << mas_v[j] << " ";
 			cout << endl;
-			for (int i = 0; i < nv; i++) {
-				if (func1(mas_v[i]) == 1) {
-					tempint = i;
-					break;
-				}
-			}
-			if (tempint == -1)
-				cout << "В массиве нет палидромов" << endl;
-			else {
+//			pal1(mas_v, nv, tempint);
+//#pragma endregion
+//			if (tempint == -1)
+//				cout << "В массиве нет палидромов" << endl;
+//			else {
 				do {
-					cout << "1:Удалить элементы массива, расположенное непосредственно перед элементом, содержащим число палиндром. \n2:Вставить новый элемент в массив после элемента массива, который является палиндромом. \n";
+					cout << "1:Найти индекс элемента массива, которое является палиндромом.\n2:Удалить элементы массива, расположенное непосредственно перед элементом, содержащим число палиндром. \n3:Вставить новый элемент в массив после элемента массива, который является палиндромом. \n";
 					cin >> menu;
 					switch (menu) {
 					case 1:
+						pal1(mas_v, nv, tempint);
+						if (tempint == -1)
+							cout << "В массиве нет палидромов" << endl;
+						else
+							cout << "Индекс элемента, содержащего палиндром: " << tempint << endl;
+						break;
+					case 2:
 						mas_v.erase(mas_v.begin(), mas_v.begin() + tempint);
 						tempint = 0;
 						cout << " new array: ";
 						for (int j = 0; j < mas_v.size(); j++) cout << mas_v[j] << " ";
 						cout << endl;
 						break;
-					case 2:
+					case 3:
 						cout << "Элемент, который хотите вставить: " << endl;
 						cin >> tempint1;
 						mas_v.insert(mas_v.begin() + tempint+1, tempint1);
@@ -212,7 +240,6 @@ int main()
 						break;
 					}
 				} while (menu != 0);
-			}
 
 			break;
 			}
